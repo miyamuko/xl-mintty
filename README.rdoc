@@ -1,4 +1,4 @@
-﻿== mintty - xyzzy から Cygwin の Mintty を起動する
+== mintty - xyzzy から Cygwin の Mintty を起動する
 
 * Home URL: http://miyamuko.s56.xrea.com/xyzzy/mintty/intro.htm
 * Version: 0.0.1
