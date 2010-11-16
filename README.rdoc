@@ -1,0 +1,88 @@
+﻿== mintty - xyzzy から Cygwin の Mintty を起動する
+
+* Home URL: http://miyamuko.s56.xrea.com/xyzzy/mintty/intro.htm
+* Version: 0.0.1
+
+
+=== SYNOPSIS
+
+  M-x mintty            ;; カレントバッファのディレクトリで Mintty を起動。
+                        ;; 同じディレクトリで既に Mintty を起動していたらそれをアクティブにする。
+  M-x mintty-login      ;; ホームディレクトリで Mintty を起動。同上
+  M-x mintty-at         ;; ディレクトリを指定して Mintty を起動。同上
+
+  C-u M-x mintty        ;; Mintty をすでに起動していても常に新しく起動する
+  C-u M-x mintty-login  ;; 同上
+  C-u M-x mintty-at     ;; 同上
+
+
+=== DESCRIPTION
+
+mintty は Cygwin のターミナルエミュレータである Mintty を xyzzy から起動するためのものです。
+Mintty は GUI アプリケーションなので run-console のように外部プログラムとして起動されます。
+
+Mintty が既に起動していた場合は起動済みの Mintty をアクティブにします
+（常に Mintty を新規で起動することもできます）。
+
+
+=== INSTALL
+
+1. {NetInstaller}[http://www7a.biglobe.ne.jp/~hat/xyzzy/ni.html]
+   で mintty, api, cygwin-mount をインストールします。
+
+2. ni-autoload を利用していない場合は、
+   ~/.xyzzy または site-lisp/siteinit.l に以下のコードを追加します。
+
+     (require "mintty")
+
+   ※ ni-autoload を利用している場合は設定は不要です。
+
+3. 設定を反映させるため xyzzy を再起動してください。
+
+   ※siteinit.l に記述した場合には再ダンプが必要です。
+
+
+=== TODO
+
+なし。
+
+
+=== KNOWN BUGS
+
+なし。
+
+要望やバグは
+{GitHub Issues}[http://github.com/miyamuko/mintty/issues] か
+{@miyamuko}[http://twitter.com/home?status=%40miyamuko%20%23xyzzy%20mintty%3a%20]
+まで。
+
+
+=== AUTHOR
+
+みやむこ かつゆき <mailto:miyamuko@gmail.com>
+
+
+=== COPYRIGHT
+
+mintty は MIT/X ライセンスに従って本ソフトウェアを使用、再配布することができます。
+
+  Copyright (c) 2010 MIYAMUKO Katsuyuki.
+
+  Permission is hereby granted, free of charge, to any person obtaining
+  a copy of this software and associated documentation files (the
+  "Software"), to deal in the Software without restriction, including
+  without limitation the rights to use, copy, modify, merge, publish,
+  distribute, sublicense, and/or sell copies of the Software, and to
+  permit persons to whom the Software is furnished to do so, subject to
+  the following conditions:
+
+  The above copyright notice and this permission notice shall be
+  included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

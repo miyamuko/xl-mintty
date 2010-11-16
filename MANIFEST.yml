@@ -1,0 +1,20 @@
+package: mintty
+version: 0.0.1
+
+sources:
+  include:
+    - site-lisp/mintty/**/*.l
+  exclude:
+    - site-lisp/mintty/**/tests/*.l
+
+document:
+  - README.rdoc
+
+files:
+  include:
+    - site-lisp/**/*.l
+    - site-lisp/**/*.lc
+    - site-lisp/mintty/lib/*.dll
+    - site-lisp/mintty/src/**/*.*
+    - site-lisp/mintty/examples/**/*.*
+    - site-lisp/mintty/tests/*.*
