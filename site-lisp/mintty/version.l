@@ -39,6 +39,10 @@
 (defun mintty-version ()
   +mintty-version+)
 
+(defun mintty-about-message ()
+  (interactive)
+  (message "mintty ~A" (mintty-version)))
+
 
 (provide "mintty/version")
 

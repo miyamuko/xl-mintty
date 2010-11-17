@@ -29,6 +29,7 @@
 
 (require "mintty/version")
 (require "mintty/mintty")
+(require "mintty/menu")
 
 
 (provide "mintty")
