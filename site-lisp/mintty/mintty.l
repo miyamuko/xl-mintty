@@ -41,23 +41,22 @@
 (defvar *mintty-path* "bin/mintty.exe") ;; relative path from *cygwin-root-dir*
 (defvar *mintty-options* nil)
 (defvar *mintty-window-class-name* "mintty")
-(defvar *mintty-reuse-window-if-match* :class-and-directory)
 
 (defun mintty ()
   (interactive)
-  (mintty-at (default-directory)))
+  (mintty-at (default-directory) (not *prefix-args*)))
 
 (defun mintty-login ()
   (interactive)
-  (mintty-at (user-homedir-pathname)))
+  (mintty-at (user-homedir-pathname) nil))
 
-(defun mintty-at (&optional dir)
+(defun mintty-at (&optional dir reuse-window)
   (interactive "DDirectory: " :default0 (default-directory))
-  (let ((existing-mintty (find-mintty dir)))
-    (if (or (zerop existing-mintty)
-            *prefix-args*)
-        (launch-mintty (mintty-launch-options *mintty-options*) dir)
-      (activate-mintty existing-mintty))))
+  (let ((existing-mintty (when reuse-window
+                           (find-mintty dir))))
+    (if (and existing-mintty (not (zerop existing-mintty)))
+        (activate-mintty existing-mintty)
+      (launch-mintty (mintty-launch-options *mintty-options*) dir))))
 
 (defun mintty-help ()
   (interactive)
@@ -102,21 +101,7 @@
            (if lisp-string
                (si:make-string-chunk lisp-string)
              0)))
-    (let ((default-class *mintty-window-class-name*)
-          (default-title (cygmount-winpath->cygpath dir)))
-      (multiple-value-bind (class title)
-          (case *mintty-reuse-window-if-match*
-            (:class-and-directory
-             (values default-class default-title))
-            (:class
-             (values default-class nil))
-            (:directory
-             (values nil default-title))
-            (t
-             (plain-error (format nil "*mintty-reuse-window-if-match* ÇÕà»â∫ÇÃÇ«ÇÍÇ©Çê›íËÇµÇƒÇ≠ÇæÇ≥Ç¢ÅB~%~{~A~%~}"
-                                  (list :class-and-directory :class :directory)))))
-        (when (or class title)
-          (FindWindow (c-str class) (c-str title)))))))
+    (FindWindow (c-str *mintty-window-class-name*) 0)))
 
 (defun activate-mintty (hwnd)
   (OpenIcon hwnd)

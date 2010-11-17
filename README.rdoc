@@ -8,12 +8,9 @@
 
   M-x mintty            ;; カレントバッファのディレクトリで Mintty を起動。
                         ;; 同じディレクトリで既に Mintty を起動していたらそれをアクティブにする。
-  M-x mintty-login      ;; ホームディレクトリで Mintty を起動。同上
-  M-x mintty-at         ;; ディレクトリを指定して Mintty を起動。同上
-
   C-u M-x mintty        ;; Mintty をすでに起動していても常に新しく起動する
-  C-u M-x mintty-login  ;; 同上
-  C-u M-x mintty-at     ;; 同上
+  M-x mintty-login      ;; ホームディレクトリで Mintty を起動。
+  M-x mintty-at         ;; ディレクトリを指定して Mintty を起動。
 
 
 === DESCRIPTION
