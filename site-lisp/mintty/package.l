@@ -27,7 +27,6 @@
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (require "api")
-  (require "cygwin-mount")
 
   (unless (find-package :mintty)
     (defpackage :mintty
@@ -36,7 +35,6 @@
        :editor
 
        :winapi
-       :cygwin-mount
        ))))
 
 

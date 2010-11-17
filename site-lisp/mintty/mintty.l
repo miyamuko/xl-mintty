@@ -37,8 +37,8 @@
           mintty-help
           ))
 
-(defvar *mintty-cygpath* "/bin/mintty.exe")
-(defvar *mintty-shell* "/etc/passwd")
+(defvar *cygwin-root-dir* nil)
+(defvar *mintty-path* "bin/mintty.exe") ;; relative path from *cygwin-root-dir*
 (defvar *mintty-options* nil)
 (defvar *mintty-window-class-name* "mintty")
 (defvar *mintty-reuse-window-if-match* :class-and-directory)
@@ -56,23 +56,21 @@
   (let ((existing-mintty (find-mintty dir)))
     (if (or (zerop existing-mintty)
             *prefix-args*)
-        (let ((options (append (mintty-launch-options *mintty-options*)
-                               (list (format nil "-e /bin/xhere ~A ~A" *mintty-shell* dir)))))
-          (launch-mintty options))
+        (launch-mintty (mintty-launch-options *mintty-options*) dir)
       (activate-mintty existing-mintty))))
 
 (defun mintty-help ()
   (interactive)
   (launch-mintty '("--help")))
 
-(defun launch-mintty (options)
+(defun launch-mintty (options &optional dir)
   (let ((cmd (mintty-launch-command options)))
-    (launch-application cmd)))
+    (call-process cmd :no-std-handles t :show :show
+                  :exec-directory (or dir (default-directory))
+                  :environ '(("CHERE_INVOKING" . "yes")))))
 
 (defun mintty-launch-command (options)
-  (format nil "~A ~{~A~^ ~}"
-          (cygmount-cygpath->winpath *mintty-cygpath*)
-          options))
+  (format nil "~A ~{~A~^ ~}" (mintty-full-path) options))
 
 (defun mintty-launch-options (options)
   (append (mintt-internal-options)
@@ -83,6 +81,21 @@
 (defun mintty-launch-options (options)
   (list (format nil "--class ~A" *mintty-window-class-name*)
         ))
+
+(defun mintty-full-path ()
+  (merge-pathnames *mintty-path* (cygwin-root-dir)))
+
+(defun cygwin-root-dir ()
+  (or *cygwin-root-dir*
+      ;; >= Cygwin 1.7
+      (read-registry "SOFTWARE\\Wow6432Node\\Cygwin\\setup" "rootdir" :local-machine)
+      (read-registry "SOFTWARE\\Cygwin\\setup" "rootdir" :local-machine)
+      ;; < Cygwin 1.7
+      (read-registry "SOFTWARE\\Wow6432Node\\Cygnus Solutions\\Cygwin\\mounts v2\\/" "native" :current-user)
+      (read-registry "SOFTWARE\\Cygnus Solutions\\Cygwin\\mounts v2\\/" "native" :current-user)
+      (read-registry "SOFTWARE\\Wow6432Node\\Cygnus Solutions\\Cygwin\\mounts v2\\/" "native" :local-machine)
+      (read-registry "SOFTWARE\\Cygnus Solutions\\Cygwin\\mounts v2\\/" "native" :local-machine)))
+
 
 (defun find-mintty (dir)
   (flet ((c-str (lisp-string)

@@ -1,4 +1,9 @@
 2010-11-17  MIYAMUKO Katsuyuki
 
+	* cygwin-mount は Cygwin 1.7 に対応していないため
+	依存しないようにした。
+
+2010-11-16  MIYAMUKO Katsuyuki
+
 	* mintty 作成開始
 

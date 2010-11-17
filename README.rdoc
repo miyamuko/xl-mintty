@@ -28,7 +28,7 @@ Mintty が既に起動していた場合は起動済みの Mintty をアクテ�
 === INSTALL
 
 1. {NetInstaller}[http://www7a.biglobe.ne.jp/~hat/xyzzy/ni.html]
-   で mintty, api, cygwin-mount をインストールします。
+   で mintty, api をインストールします。
 
 2. ni-autoload を利用していない場合は、
    ~/.xyzzy または site-lisp/siteinit.l に以下のコードを追加します。
